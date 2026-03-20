@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Primera Mini App</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            /* 2. Adaptar colores automáticamente al tema del usuario */
+            background-color: var(--tg-theme-bg-color);
+            color: var(--tg-theme-text-color);
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        button {
+            background-color: var(--tg-theme-button-color);
+            color: var(--tg-theme-button-text-color);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="greeting">Cargando...</h1>
+    <p>Estás dentro de una Telegram Mini App</p>
+    <button id="main-btn">Cerrar App</button>
+
+    <script>
+        // 3. Inicializar la Web App
+        const tg = window.Telegram.WebApp;
+
+        // Expandir la app a pantalla completa
+        tg.expand();
+
+        // Obtener el nombre del usuario desde el SDK
+        const user = tg.initDataUnsafe?.user;
+        if (user) {
+            document.getElementById('greeting').innerText = `¡Hola, ${user.first_name}!`;
+        }
+
+        // Configurar el botón de cerrar
+        document.getElementById('main-btn').addEventListener('click', () => {
+            tg.close(); // Cierra la Mini App
+        });
+
+        // Informar a Telegram que la app está lista para mostrarse
+        tg.ready();
+    </script>
+</body>
+</html>
